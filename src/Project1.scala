@@ -52,12 +52,12 @@ class LeaderActor extends Actor {
 object Project1 {
 
   def main(args: Array[String]) {
-    val N = if (args.length > 0) args(0) toInt else 3l // size of problem
-    val k = if (args.length > 1) args(1) toInt else 2l // length of sum sequence
+    val beginning = if (args.length > 0) args(0).toInt else 3l
+    val sequence = if (args.length > 1) args(1).toInt else 2l
 
     val system = ActorSystem("system")
     val leader = system.actorOf(Props[LeaderActor], "master")
-    leader ! (N, k)
+    leader ! (beginning, sequence)
 
   }
 }
