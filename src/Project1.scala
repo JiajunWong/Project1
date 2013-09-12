@@ -19,7 +19,7 @@ class SlaveActor extends Actor {
 }
 
 class LeaderActor extends Actor {
-  private val numSubtasks = 4
+  private var numSubtasks = 4
   private var waitToExit = 0l;
 
   def receive = {
@@ -33,6 +33,10 @@ class LeaderActor extends Actor {
 
     case (n: Long, k: Long) => {
       val origin = k * (k + 1) * (2 * k + 1) / 6
+      
+      if(n < 10) {
+        numSubtasks = 1
+      }
 
       for (j <- 1 to numSubtasks) {
         (context.actorOf(Props[SlaveActor], ""+j)) ! (origin, 1 + (j - 1) * n / numSubtasks, n / numSubtasks, k)
@@ -48,8 +52,8 @@ class LeaderActor extends Actor {
 object Project1 {
 
   def main(args: Array[String]) {
-    val N = if (args.length > 0) args(0) toInt else 1000000l // size of problem
-    val k = if (args.length > 1) args(1) toInt else 24l // length of sum sequence
+    val N = if (args.length > 0) args(0) toInt else 3l // size of problem
+    val k = if (args.length > 1) args(1) toInt else 2l // length of sum sequence
 
     val system = ActorSystem("system")
     val leader = system.actorOf(Props[LeaderActor], "master")
