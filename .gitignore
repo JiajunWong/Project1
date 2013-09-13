@@ -1,5 +1,5 @@
-*.class
-*.cache
+/class
+/cache
 .class
 .cache
-.classpath
+/classpath
