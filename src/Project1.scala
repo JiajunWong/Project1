@@ -25,9 +25,10 @@ class LeaderActor extends Actor {
   def receive = {
     case (n: Long) => {
       waitToExit = waitToExit + n
-      if (waitToExit == 4) {
+      if (waitToExit == numSubtasks) {
         context.stop(self)
         println("actor are all stoped!")
+        sys.exit()
       }
     }
 
